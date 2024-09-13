@@ -1,0 +1,53 @@
+﻿@model SchoolAdminAPIconsuming.Models.SignIn
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<h2>Sign In</h2>
+
+<form asp-action="SignIn" method="post">
+    <div class="form-group">
+        <label for="UserId">User ID</label>
+        <input type="text" name="UserId" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="password" name="Password" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select name="Role" id="Role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Student">Student</option>
+            <option value="Librarian">Librarian</option>
+            <option value="Accountant">Accountant</option>
+            <option value="SystemAdmin">System Admin</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="parentLoginSection" style="display: none;">
+        <input type="checkbox" name="LoginAsParent" id="LoginAsParent" value="true" />
+        <label for="LoginAsParent">Login as Parent</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign In</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('Role').addEventListener('change', function () {
+            var role = this.value;
+            var parentLoginSection = document.getElementById('parentLoginSection');
+            if (role === 'Student') {
+                parentLoginSection.style.display = 'block';
+            } else {
+                parentLoginSection.style.display = 'none';
+            }
+        });
+    </script>
+}

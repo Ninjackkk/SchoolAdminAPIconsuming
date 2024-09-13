@@ -1,0 +1,63 @@
+﻿@model SchoolAdminAPIconsuming.Models.Teacher
+
+@{
+    ViewBag.Title = "Add Teacher";
+}
+
+<h2>Add Teacher</h2>
+
+<form asp-action="AddTeacher" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Qualification" class="control-label"></label>
+        <input asp-for="Qualification" class="form-control" />
+        <span asp-validation-for="Qualification" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HireDate" class="control-label"></label>
+        <input asp-for="HireDate" class="form-control" type="date" />
+        <span asp-validation-for="HireDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserId" class="control-label"></label>
+        <input asp-for="UserId" class="form-control" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MonthlySalary" class="control-label"></label>
+        <input asp-for="MonthlySalary" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="MonthlySalary" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="STD" class="control-label"></label>
+        <input asp-for="STD" class="form-control" />
+        <span asp-validation-for="STD" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="role" class="control-label"></label>
+        <input asp-for="role" class="form-control" />
+        <span asp-validation-for="role" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add Teacher" class="btn btn-primary" />
+    </div>
+</form>

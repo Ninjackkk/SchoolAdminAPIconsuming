@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Enter OTP";
+}
+
+<h2>Enter OTP</h2>
+
+<form asp-action="OTP" method="post">
+    <div class="form-group">
+        <label for="enteredOtp">OTP Code</label>
+        <input type="text" name="enteredOtp" id="enteredOtp" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        // You can add any additional JavaScript functionality here if needed
+    </script>
+}

@@ -15,6 +15,7 @@ namespace SchoolAdminAPIconsuming.Controllers
             client = new HttpClient(clientHandler);        // loading the client handler into client object
         }
 
+        // student part
 
         // GET: /Admin/AddStudent
         public IActionResult AddStudent()
@@ -46,25 +47,9 @@ namespace SchoolAdminAPIconsuming.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult Index()
         {
-            List<Student> emplist = new List<Student>();                                //creating list of Emp to store empdetails
+            List<Student> studlist = new List<Student>();                               
 
             string url = "https://localhost:44355/api/Admin/GetAllStudents";             //store the url of the concerned api fxn
 
@@ -78,10 +63,10 @@ namespace SchoolAdminAPIconsuming.Controllers
 
                 if (obj != null)
                 {
-                    emplist = obj;           //obj was local object that stored the data of emp , so we shifted it to global object emplist
+                    studlist = obj;           //obj was local object that stored the data of emp , so we shifted it to global object emplist
                 }
             }
-            return View(emplist);
+            return View(studlist);
         }
 
         public async Task<IActionResult> DeleteStudent(int id)
@@ -139,6 +124,118 @@ namespace SchoolAdminAPIconsuming.Controllers
             return StatusCode((int)response.StatusCode);
         }
 
+
+        //Teacher Part
+
+        public IActionResult AddTeacher()
+        {
+            return View();
+        }
+
+        // POST: /Admin/AddTeacher
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTeacher(Teacher teacher)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(teacher);
+            }
+
+            string url = "https://localhost:44355/api/Admin/AddTeacher";
+            var content = new StringContent(JsonConvert.SerializeObject(teacher), System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return StatusCode((int)response.StatusCode);
+        }
+
+        // GET: /Admin/EditTeacher/5
+        public async Task<IActionResult> EditTeacher(int id)
+        {
+            string url = $"https://localhost:44355/api/Admin/GetTeacherByID/{id}";
+
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = await response.Content.ReadAsStringAsync();
+                var teacher = JsonConvert.DeserializeObject<Teacher>(jsondata);
+
+                if (teacher != null)
+                {
+                    return View(teacher);
+                }
+            }
+
+            return NotFound();
+        }
+
+        // POST: /Admin/EditTeacher
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTeacher(Teacher teacher)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(teacher);
+            }
+
+            string url = $"https://localhost:44355/api/Admin/UpdateTeacher/{teacher.TeacherId}";
+            var content = new StringContent(JsonConvert.SerializeObject(teacher), System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PutAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return StatusCode((int)response.StatusCode);
+        }
+
+        // GET: /Admin/DeleteTeacher/5
+        public async Task<IActionResult> DeleteTeacher(int id)
+        {
+            string url = $"https://localhost:44355/api/Admin/DeleteTeacher/{id}";
+
+            HttpResponseMessage response = await client.DeleteAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return StatusCode((int)response.StatusCode);
+        }
+
+        // GET: /Admin/TeacherList
+        public async Task<IActionResult> TeacherList()
+        {
+            List<Teacher> teacherList = new List<Teacher>();
+
+            string url = "https://localhost:44355/api/Admin/GetAllTeachers"; // You'll need to add this endpoint in your API
+
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<List<Teacher>>(jsondata);
+
+                if (obj != null)
+                {
+                    teacherList = obj;
+                }
+            }
+
+            return View(teacherList);
+        }
 
 
 
