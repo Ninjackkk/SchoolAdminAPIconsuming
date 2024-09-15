@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SchoolAdminAPIconsuming.Data;
 using SchoolAdminAPIconsuming.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace SchoolAdminAPIconsuming.Controllers
 {
     public class AdminController : Controller
     {
+
         HttpClient client;                      //Declaring global object of HttpClient class 
 
-        public AdminController() 
+        private readonly ApplicationDbContext db;
+
+
+        public AdminController(ApplicationDbContext db) 
         {
+            this.db = db;
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             client = new HttpClient(clientHandler);        // loading the client handler into client object
@@ -238,24 +247,164 @@ namespace SchoolAdminAPIconsuming.Controllers
         }
 
 
+        // Online Applications
+
+
+
+        public IActionResult OnlineApplication()
+        {
+            return View();
+        }
+
+        // POST: /Admin/OnlineApplication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OnlineApplication(OnlineApplication application)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
+
+            db.OnlineApplications.Add(application);
+            await db.SaveChangesAsync();
+            TempData["SuccessMessage"] = "You will receive an email shortly for further process.";
+
+            return RedirectToAction("SignIn","Account");
+        }
 
 
 
 
+        public async Task<IActionResult> ViewApplications()
+        {
+            var applications = await db.OnlineApplications.ToListAsync();
+            return View(applications);
+        }
+
+        // POST: /Admin/ApproveApplication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApproveApplication(int id)
+        {
+            var application = await db.OnlineApplications.FindAsync(id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            // Send approval email
+            await SendEmail(
+                application.Parent_Email,
+                "Application Approved",
+                "Your application has been approved. We will contact you soon for a scheduled interview.");
+
+            db.OnlineApplications.Remove(application);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(ViewApplications));
+        }
+
+        // POST: /Admin/RejectApplication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectApplication(int id)
+        {
+            var application = await db.OnlineApplications.FindAsync(id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            // Send rejection email
+            await SendEmail(
+                application.Parent_Email,
+                "Application Rejected",
+                "We regret to inform you that your application has been rejected.");
+
+            db.OnlineApplications.Remove(application);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(ViewApplications));
+        }
+
+        private async Task SendEmail(string toEmail, string subject, string body)
+        {
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("forboringwork@gmail.com", "kfhestoyrzxrpxyc"),
+                EnableSsl = true,
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("forboringwork@gmail.com"),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+
+            mailMessage.To.Add(toEmail);
+
+            await smtpClient.SendMailAsync(mailMessage);
+        }
 
 
+        public async Task<IActionResult> ViewLeaveRequests()
+        {
+            var leaveRequests = await db.LeaveRequests.ToListAsync();
+            return View(leaveRequests);
+        }
 
+        // POST: /Admin/ApproveLeaveRequest
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApproveLeaveRequest(int id)
+        {
+            var leaveRequest = await db.LeaveRequests.FindAsync(id);
+            if (leaveRequest == null)
+            {
+                return NotFound();
+            }
 
+            leaveRequest.Status = "Approved";
+            db.LeaveRequests.Update(leaveRequest);
+            await db.SaveChangesAsync();
 
+            TempData["SuccessMessage"] = "Leave request approved successfully.";
+            return RedirectToAction(nameof(ViewLeaveRequests));
+        }
 
+        // POST: /Admin/RejectLeaveRequest
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectLeaveRequest(int id)
+        {
+            var leaveRequest = await db.LeaveRequests.FindAsync(id);
+            if (leaveRequest == null)
+            {
+                return NotFound();
+            }
 
+            leaveRequest.Status = "Rejected";
+            db.LeaveRequests.Update(leaveRequest);
+            await db.SaveChangesAsync();
 
-
-
-
-
-
-
-
+            TempData["SuccessMessage"] = "Leave request rejected successfully.";
+            return RedirectToAction(nameof(ViewLeaveRequests));
+        }
     }
+
+
+
+
 }
+
+
+
+
+
+
+
+

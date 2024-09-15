@@ -51,8 +51,9 @@ namespace SchoolAdminAPIconsuming.Controllers
                     if (data != null)
                     {
                         HttpContext.Session.SetString("UserId", signIn.UserId);
+
                         HttpContext.Session.SetString("Role", signIn.Role);
-                        return RedirectToAction("AddStudent", "Admin");
+                        return RedirectToAction("CreateAssignment", "Teach");
                     }
                 }
                 else if (signIn.Role == "Student")

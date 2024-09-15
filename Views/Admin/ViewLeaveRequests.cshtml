@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Leave Requests";
+}
+
+<h1>Leave Requests</h1>
+
+<!-- Display success message if available -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.FromDate.ToShortDateString()</td>
+                <td>@request.ToDate.ToShortDateString()</td>
+                <td>@request.Reason</td>
+                <td>@request.Status</td>
+                <td>
+                    @if (request.Status == "Pending")
+                    {
+                        <form asp-action="ApproveLeaveRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@request.LeaveApplicationId" />
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+
+                        <form asp-action="RejectLeaveRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@request.LeaveApplicationId" />
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

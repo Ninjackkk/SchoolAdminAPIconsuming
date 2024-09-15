@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.Student>
+
+@{
+    ViewData["Title"] = "Mark Attendance";
+    var currentDate = ViewBag.Date;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="MarkAttendance" method="post">
+    <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" value="@currentDate" class="form-control" required />
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Student ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="presentStudentIds" value="@student.StudentId" />
+                    </td>
+                    <td>@student.StudentId</td>
+                    <td>@student.StudentName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Submit Attendance</button>
+</form>

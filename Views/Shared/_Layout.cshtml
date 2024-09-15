@@ -36,8 +36,37 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddTeacher">Add Teacher</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewApplications">View Applications</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewLeaveRequests">View Leave Requests</a>
+                            </li>
                         }
-                       
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Teacher")
+                        {
+                           
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="CreateAssignment">Add-Assignment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="MarkAttendance">Mark Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="Index">View Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="LeaveRequest">Apply Leave</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="ViewLeaveRequests">View Leave Status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teach" asp-action="CreateTimetable">Add Timetable</a>
+                            </li>
+                          
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>

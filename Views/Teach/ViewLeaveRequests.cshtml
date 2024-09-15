@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "My Leave Requests";
+}
+
+<h1>My Leave Requests</h1>
+
+<!-- Display success message if available -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.FromDate.ToShortDateString()</td>
+                <td>@request.ToDate.ToShortDateString()</td>
+                <td>@request.Reason</td>
+                <td>@request.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="CreateLeaveRequest" class="btn btn-primary">Apply for New Leave</a>
+</div>

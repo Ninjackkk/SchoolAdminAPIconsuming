@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.OnlineApplication>
+
+@{
+    ViewData["Title"] = "View Applications";
+}
+
+<h2>View Applications</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Applying For</th>
+            <th>Address</th>
+            <th>Parent Name</th>
+            <th>Parent Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var app in Model)
+        {
+            <tr>
+                <td>@app.StudentName</td>
+                <td>@app.ApplyingForSTD</td>
+                <td>@app.Address</td>
+                <td>@app.Parent_Name</td>
+                <td>@app.Parent_Email</td>
+                <td>
+                    <form asp-action="ApproveApplication" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@app.OnlineApplicationID" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form asp-action="RejectApplication" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@app.OnlineApplicationID" />
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

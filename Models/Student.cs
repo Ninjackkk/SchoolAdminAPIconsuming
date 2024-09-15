@@ -11,6 +11,8 @@ namespace SchoolAdminAPIconsuming.Models
         public string Password { get; set; }
         public string Parent_Email { get; set; }
         public string FeesStatus { get; set; }
+        public string STD { get; set; }
+
         public string role { get; set; }
     }
 }

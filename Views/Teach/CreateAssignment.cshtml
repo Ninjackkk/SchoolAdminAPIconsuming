@@ -1,0 +1,49 @@
+﻿@model AssignmentViewModel
+
+@{
+    ViewData["Title"] = "Create Assignment";
+}
+
+<h1>Create Assignment</h1>
+
+<form asp-action="CreateAssignment" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="AssignmentName" class="control-label"></label>
+        <input asp-for="AssignmentName" class="form-control" />
+        <span asp-validation-for="AssignmentName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AssignmentDate" class="control-label"></label>
+        <input asp-for="AssignmentDate" class="form-control" type="date" />
+        <span asp-validation-for="AssignmentDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Deadline" class="control-label"></label>
+        <input asp-for="Deadline" class="form-control" type="date" />
+        <span asp-validation-for="Deadline" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AssignmentFile" class="control-label"></label>
+        <input type="file" asp-for="AssignmentFile" class="form-control" />
+        <span asp-validation-for="AssignmentFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GivenBy" class="control-label"></label>
+        <input asp-for="GivenBy" class="form-control" />
+        <span asp-validation-for="GivenBy" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StdId" class="control-label">STD</label> 
+        <select asp-for="StdId" class="form-control" asp-items="@(new SelectList(ViewBag.StdList, "StdId", "StdName"))"></select>
+        <span asp-validation-for="StdId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>

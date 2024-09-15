@@ -18,6 +18,16 @@ namespace SchoolAdminAPIconsuming.Data
 
         public DbSet<OnlineApplication> OnlineApplications { get; set; }
 
+        public DbSet<STD> STDs { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+
+        public DbSet<Assignment> Assignments { get; set; }
+
+        public DbSet<LeaveRequest> LeaveRequests { get; set; }
+
+        public DbSet<Timetable> Timetables { get; set; }
+
+
 
 
     }

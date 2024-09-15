@@ -1,0 +1,47 @@
+﻿@model SchoolAdminAPIconsuming.Models.OnlineApplication
+
+@{
+    ViewData["Title"] = "Online Application";
+}
+
+<h2>Online Application</h2>
+
+<form asp-action="OnlineApplication" method="post">
+    <div class="form-group">
+        <label asp-for="StudentName"></label>
+        <input asp-for="StudentName" class="form-control" />
+        <span asp-validation-for="StudentName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ApplyingForSTD"></label>
+        <input asp-for="ApplyingForSTD" class="form-control" />
+        <span asp-validation-for="ApplyingForSTD" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <textarea asp-for="Address" class="form-control"></textarea>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Parent_Name"></label>
+        <input asp-for="Parent_Name" class="form-control" />
+        <span asp-validation-for="Parent_Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Parent_Email"></label>
+        <input asp-for="Parent_Email" class="form-control" />
+        <span asp-validation-for="Parent_Email" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Apply</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

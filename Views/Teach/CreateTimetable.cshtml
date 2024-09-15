@@ -1,0 +1,35 @@
+﻿@model SchoolAdminAPIconsuming.Models.TimetableViewModel
+
+@{
+    ViewData["Title"] = "Create Timetable";
+}
+
+<h1>Create Timetable</h1>
+
+<form asp-action="CreateTimetable" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="TimetableName" class="control-label"></label>
+        <input asp-for="TimetableName" class="form-control" />
+        <span asp-validation-for="TimetableName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TimetableFile" class="control-label"></label>
+        <input asp-for="TimetableFile" type="file" class="form-control" />
+        <span asp-validation-for="TimetableFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StdId" class="control-label">STD</label>
+        <select asp-for="StdId" asp-items="ViewBag.StdList" class="form-control"></select>
+        <span asp-validation-for="StdId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
