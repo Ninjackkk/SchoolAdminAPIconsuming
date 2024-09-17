@@ -42,6 +42,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewLeaveRequests">View Leave Requests</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewApplications">Add Librarian</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewApplications">List Librarians</a>
+                            </li>
+
+
+
                         }
                         @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Teacher")
                         {
@@ -67,8 +76,21 @@
                           
                         }
 
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Student")
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewAssignment">View-Assignment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
+                            </li>
+                            
+
+                        }
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                         </li>
                     </ul>
                 </div>

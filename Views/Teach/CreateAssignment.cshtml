@@ -38,9 +38,9 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="StdId" class="control-label">STD</label> 
-        <select asp-for="StdId" class="form-control" asp-items="@(new SelectList(ViewBag.StdList, "StdId", "StdName"))"></select>
-        <span asp-validation-for="StdId" class="text-danger"></span>
+        <label asp-for="StdName" class="control-label">Student</label>
+        <select asp-for="StdName" class="form-control" asp-items="@(new SelectList(ViewBag.StdList, "StdName", "StdName"))"></select>
+        <span asp-validation-for="StdName" class="text-danger"></span>
     </div>
 
     <div class="form-group">

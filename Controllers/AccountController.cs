@@ -56,27 +56,51 @@ namespace SchoolAdminAPIconsuming.Controllers
                         return RedirectToAction("CreateAssignment", "Teach");
                     }
                 }
+
+
                 else if (signIn.Role == "Student")
                 {
                     data = db.Students
                              .Where(s => s.UserId == signIn.UserId && s.Password == signIn.Password)
                              .FirstOrDefault();
 
-                    if (data != null && loginAsParent)
+                    if (data != null)
                     {
                         var student = data as Student;
                         if (student != null)
                         {
-                            var otp = GenerateOtp();
-                            SendOtpEmail(student.Parent_Email, otp);
+                            if (loginAsParent)
+                            {
+                                var otp = GenerateOtp();
+                                SendOtpEmail(student.Parent_Email, otp);
 
-                            TempData["Otp"] = otp;
-                            TempData["StudentUserId"] = student.UserId;
-                            TempData["StudentPassword"] = student.Password;
-                            return RedirectToAction("OTP");
+                                // Store OTP and user details in session
+                                HttpContext.Session.SetString("Otp", otp);
+                                HttpContext.Session.SetString("StudentUserId", student.UserId);
+                                HttpContext.Session.SetString("StudentPassword", student.Password);
+                                HttpContext.Session.SetString("StudentId", student.StudentId.ToString());
+
+
+                                return RedirectToAction("OTP");
+                            }
+                            else
+                            {
+                                // Redirect to student portal if loginAsParent is not checked
+                                HttpContext.Session.SetString("UserId", student.UserId);
+                                HttpContext.Session.SetString("StudentId", student.StudentId.ToString());
+                                HttpContext.Session.SetString("studentstd", student.STD);
+
+
+                                HttpContext.Session.SetString("Role", "Student");
+
+                                return RedirectToAction("ViewAttendance","Student");
+                            }
                         }
                     }
                 }
+
+
+
                 else if (signIn.Role == "Librarian")
                 {
                     data = db.Librarians
@@ -138,12 +162,19 @@ namespace SchoolAdminAPIconsuming.Controllers
         [HttpPost]
         public IActionResult OTP(string enteredOtp)
         {
-            if (TempData["Otp"] != null && TempData["Otp"].ToString() == enteredOtp)
+            var storedOtp = HttpContext.Session.GetString("Otp");
+
+            if (storedOtp != null && storedOtp == enteredOtp)
             {
-                HttpContext.Session.SetString("UserId", TempData["StudentUserId"].ToString());
+                HttpContext.Session.SetString("UserId", HttpContext.Session.GetString("StudentUserId"));
                 HttpContext.Session.SetString("Role", "Student");
 
-                return RedirectToAction("AddStudent","Admin");
+                // Clear the OTP after successful validation
+                HttpContext.Session.Remove("Otp");
+                HttpContext.Session.Remove("StudentUserId");
+                HttpContext.Session.Remove("StudentPassword");
+
+                return RedirectToAction("AddStudent", "Admin");
             }
             else
             {
@@ -151,6 +182,7 @@ namespace SchoolAdminAPIconsuming.Controllers
                 return View();
             }
         }
+
         private string GenerateOtp()
         {
             return new Random().Next(100000, 999999).ToString();
@@ -180,9 +212,6 @@ namespace SchoolAdminAPIconsuming.Controllers
                 smtpClient.Send(mailMessage);
             }
         }
-
-
-
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserId");

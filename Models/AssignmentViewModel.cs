@@ -7,7 +7,7 @@
         public DateTime Deadline { get; set; }
         public IFormFile AssignmentFile { get; set; }
         public string GivenBy { get; set; }
-        public int StdId { get; set; }
+        public string StdName { get; set; } // Adjusted to use StdName
     }
 
 }

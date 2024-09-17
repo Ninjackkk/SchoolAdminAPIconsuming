@@ -274,8 +274,6 @@ namespace SchoolAdminAPIconsuming.Controllers
         }
 
 
-
-
         public async Task<IActionResult> ViewApplications()
         {
             var applications = await db.OnlineApplications.ToListAsync();

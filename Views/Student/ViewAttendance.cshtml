@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.Attendance>
+
+@{
+    ViewData["Title"] = "View Attendance";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @ViewData["Message"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Attendance ID</th>
+            <th>Student ID</th>
+            <th>Date</th>
+            <th>Is Present</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var attendance in Model)
+        {
+            <tr>
+                <td>@attendance.AttendanceId</td>
+                <td>@attendance.StudentId</td>
+                <td>@attendance.Date.ToShortDateString()</td>
+                <td>@(attendance.IsPresent? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>

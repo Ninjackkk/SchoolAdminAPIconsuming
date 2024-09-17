@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SchoolAdminAPIconsuming.Models
 {
-    public class Assignment
+    public class AssignmentResponse
     {
         [Key]
-        public int AssignmentId { get; set; }
+        public int ResponseAssignmentId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -19,12 +18,14 @@ namespace SchoolAdminAPIconsuming.Models
         public DateTime Deadline { get; set; }
 
         [Required]
-        public string AssignmentFile { get; set; }  // Path or URL to the file
+        public DateTime SubmittedOn { get; set; }
+
+        [Required]
+        public string SolutionFile { get; set; }  // Path or URL to the file
 
         [Required]
         public string GivenBy { get; set; }  // Teacher's name
 
         public string StdName { get; set; }  // Student's name
-
     }
 }

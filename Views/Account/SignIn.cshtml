@@ -4,50 +4,65 @@
     ViewData["Title"] = "Sign In";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["SuccessMessage"]
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <h2 class="mb-4">Sign In</h2>
+
+        <form asp-action="SignIn" method="post">
+            <div class="form-group">
+                <label for="UserId">User ID</label>
+                <input type="text" id="UserId" name="UserId" class="form-control" placeholder="Enter your User ID" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter your password" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Role">Role</label>
+                <select name="Role" id="Role" class="form-control" required>
+                    <option value="">Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                    <option value="Librarian">Librarian</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="SystemAdmin">System Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="parentLoginSection" style="display: none;">
+                <div class="form-check">
+                    <input type="checkbox" name="LoginAsParent" id="LoginAsParent" class="form-check-input" value="true" />
+                    <label class="form-check-label" for="LoginAsParent">Login as Parent</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <a href="@Url.Action("OnlineApplication", "Admin")" class="btn btn-secondary">Apply for Admission</a>
+            </div>
+        </form>
     </div>
-}
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<h2>Sign In</h2>
-
-<form asp-action="SignIn" method="post">
-    <div class="form-group">
-        <label for="UserId">User ID</label>
-        <input type="text" name="UserId" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Password">Password</label>
-        <input type="password" name="Password" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Role">Role</label>
-        <select name="Role" id="Role" class="form-control" required>
-            <option value="">Select Role</option>
-            <option value="Admin">Admin</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Student">Student</option>
-            <option value="Librarian">Librarian</option>
-            <option value="Accountant">Accountant</option>
-            <option value="SystemAdmin">System Admin</option>
-        </select>
-    </div>
-
-    <div class="form-group" id="parentLoginSection" style="display: none;">
-        <input type="checkbox" name="LoginAsParent" id="LoginAsParent" value="true" />
-        <label for="LoginAsParent">Login as Parent</label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Sign In</button>
-    <a href="@Url.Action("OnlineApplication", "Admin")" class="btn btn-secondary">Apply for Admission</a>
-</form>
-
-@section Scripts {
     <script>
         document.getElementById('Role').addEventListener('change', function () {
             var role = this.value;
@@ -59,4 +74,5 @@
             }
         });
     </script>
-}
+</body>
+</html>

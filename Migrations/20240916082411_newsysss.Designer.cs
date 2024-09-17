@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolAdminAPIconsuming.Data;
 
@@ -11,9 +12,11 @@ using SchoolAdminAPIconsuming.Data;
 namespace SchoolAdminAPIconsuming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240916082411_newsysss")]
+    partial class newsysss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,12 +85,8 @@ namespace SchoolAdminAPIconsuming.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StdId")
+                    b.Property<int>("StdId")
                         .HasColumnType("int");
-
-                    b.Property<string>("StdName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AssignmentId");
 
@@ -392,9 +391,13 @@ namespace SchoolAdminAPIconsuming.Migrations
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Assignment", b =>
                 {
-                    b.HasOne("SchoolAdminAPIconsuming.Models.STD", null)
+                    b.HasOne("SchoolAdminAPIconsuming.Models.STD", "STD")
                         .WithMany("Assignments")
-                        .HasForeignKey("StdId");
+                        .HasForeignKey("StdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("STD");
                 });
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Attendance", b =>

@@ -62,7 +62,8 @@ namespace SchoolAdminAPIconsuming.Controllers
                     Deadline = viewModel.Deadline,
                     AssignmentFile = filePath,
                     GivenBy = viewModel.GivenBy,
-                    StdId = viewModel.StdId
+                    StdName = viewModel.StdName // Adjusted to use StdName
+
                 };
 
                 db.Assignments.Add(assignment);

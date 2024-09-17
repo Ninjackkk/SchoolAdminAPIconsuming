@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Assignment>
+
+@{
+    ViewData["Title"] = "View Assignments";
+}
+
+<h1>Assignments</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Assignment Name</th>
+            <th>Assignment Date</th>
+            <th>Deadline</th>
+            <th>Given By</th>
+            <th>File</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var assignment in Model)
+        {
+            <tr>
+                <td>@assignment.AssignmentName</td>
+                <td>@assignment.AssignmentDate.ToShortDateString()</td>
+                <td>@assignment.Deadline.ToShortDateString()</td>
+                <td>@assignment.GivenBy</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(assignment.AssignmentFile))
+                    {
+                        <a href="@assignment.AssignmentFile" target="_blank">View File</a>
+                    }
+                    else
+                    {
+                        <span>No File</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
