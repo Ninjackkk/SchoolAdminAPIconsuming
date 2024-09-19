@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Assignment>
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@model IEnumerable<Assignment>
 
 @{
     ViewData["Title"] = "View Assignments";
@@ -14,6 +16,8 @@
             <th>Deadline</th>
             <th>Given By</th>
             <th>File</th>
+            <th>Upload Solution</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +37,20 @@
                     {
                         <span>No File</span>
                     }
+                </td>
+                <td>
+                    <form asp-action="SubmitAssignment" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="AssignmentName" value="@assignment.AssignmentName" />
+                        <input type="hidden" name="AssignmentDate" value="@assignment.AssignmentDate.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="Deadline" value="@assignment.Deadline.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="GivenBy" value="@assignment.GivenBy" />
+                        <input type="hidden" name="StdName" value="@assignment.StdName" />
+
+                        <input type="hidden" name="StudentId" value="@HttpContextAccessor.HttpContext.Session.GetString("StudentId")" /> <!-- Assuming you store student's name in session -->
+
+                        <input type="file" name="SolutionFile" required />
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </td>
             </tr>
         }

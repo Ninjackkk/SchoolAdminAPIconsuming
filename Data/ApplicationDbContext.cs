@@ -27,6 +27,10 @@ namespace SchoolAdminAPIconsuming.Data
 
         public DbSet<Timetable> Timetables { get; set; }
 
+        public DbSet<AssignmentResponse> AssignmentResponses { get; set; }
+
+
+
 
 
 

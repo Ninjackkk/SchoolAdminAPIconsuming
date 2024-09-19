@@ -79,6 +79,8 @@ namespace SchoolAdminAPIconsuming.Controllers
                                 HttpContext.Session.SetString("StudentUserId", student.UserId);
                                 HttpContext.Session.SetString("StudentPassword", student.Password);
                                 HttpContext.Session.SetString("StudentId", student.StudentId.ToString());
+                                HttpContext.Session.SetString("StdName", student.STD);
+
 
 
                                 return RedirectToAction("OTP");

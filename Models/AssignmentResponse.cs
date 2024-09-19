@@ -27,5 +27,8 @@ namespace SchoolAdminAPIconsuming.Models
         public string GivenBy { get; set; }  // Teacher's name
 
         public string StdName { get; set; }  // Student's name
+
+        public double Score { get; set; }
+        public int? StudentId { get ; set; }
     }
 }

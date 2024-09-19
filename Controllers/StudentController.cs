@@ -95,6 +95,79 @@ namespace SchoolAdminAPIconsuming.Controllers
             var fileBytes = System.IO.File.ReadAllBytes(fileFullPath);
             return File(fileBytes, "application/octet-stream", fileName);
         }
+
+
+
+
+
+
+
+        // assignment submission remaining
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitAssignment(AssignmentResponseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Save the file to the uploads folder
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var filePath = Path.Combine(uploadsFolder, model.SolutionFile.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.SolutionFile.CopyToAsync(stream);
+            }
+
+            // Prepare the assignment response for submission
+            var assignmentResponse = new
+            {
+                model.AssignmentName,
+                model.AssignmentDate,
+                model.Deadline,
+                SubmittedOn = DateTime.Now, // Set this in the API
+                model.GivenBy,
+                model.StdName,
+                model.StudentId,
+                AssignmentFile = model.SolutionFile.FileName // Store just the filename
+            };
+
+            // Serialize and send the response to the API
+            var jsonContent = JsonConvert.SerializeObject(assignmentResponse);
+            var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
+
+            // Call the API to submit the assignment response
+            var response = await _client.PostAsync("https://localhost:44355/api/Student/SubmitAssignment", content);
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.Message = "Assignment submitted successfully.";
+                return View();
+            }
+
+            ViewBag.Message = "Error submitting assignment.";
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }
