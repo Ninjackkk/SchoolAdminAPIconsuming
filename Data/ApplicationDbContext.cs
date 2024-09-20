@@ -29,6 +29,11 @@ namespace SchoolAdminAPIconsuming.Data
 
         public DbSet<AssignmentResponse> AssignmentResponses { get; set; }
 
+        public DbSet<AcademicReport> AcademicReports { get; set; }
+
+        public DbSet<BookIssuance> BookIssuances { get; set; }
+
+        public DbSet<Book> Books { get; set; }
 
 
 

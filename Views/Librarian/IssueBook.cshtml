@@ -1,0 +1,64 @@
+﻿@model BookIssuance
+
+@{
+    ViewData["Title"] = "Issue Book";
+}
+
+<h2>Issue Book</h2>
+
+<form asp-action="IssueBook" method="post">
+    <div class="form-group">
+        <label for="UserType">Select User Type</label>
+        <select class="form-control" id="UserType" name="userType" required onchange="showUserDropdown()">
+            <option value="">-- Select User Type --</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Student">Student</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="teacherDropdown" style="display:none;">
+        <label for="Teacher">Select Teacher</label>
+        <select class="form-control" asp-items="ViewBag.Teachers" name="userId">
+            <option value="">-- Select a Teacher --</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="studentDropdown" style="display:none;">
+        <label for="Student">Select Student</label>
+        <select class="form-control" asp-items="ViewBag.Students" name="userId">
+            <option value="">-- Select a Student --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Book">Select Book</label>
+        <select class="form-control" asp-items="ViewBag.Books" name="bookId" required>
+            <option value="">-- Select a Book --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="IssuedOn">Issue Date</label>
+        <input type="date" class="form-control" id="IssuedOn" name="issuedOn" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Issue Book</button>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        function showUserDropdown() {
+            var userType = document.getElementById("UserType").value;
+            if (userType === "Teacher") {
+                document.getElementById("teacherDropdown").style.display = "block";
+                document.getElementById("studentDropdown").style.display = "none";
+            } else if (userType === "Student") {
+                document.getElementById("teacherDropdown").style.display = "none";
+                document.getElementById("studentDropdown").style.display = "block";
+            } else {
+                document.getElementById("teacherDropdown").style.display = "none";
+                document.getElementById("studentDropdown").style.display = "none";
+            }
+        }
+    </script>
+}

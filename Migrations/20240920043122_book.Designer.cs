@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolAdminAPIconsuming.Data;
 
@@ -11,9 +12,11 @@ using SchoolAdminAPIconsuming.Data;
 namespace SchoolAdminAPIconsuming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240920043122_book")]
+    partial class book
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,23 +299,13 @@ namespace SchoolAdminAPIconsuming.Migrations
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Librarian", b =>
                 {
-                    b.Property<int>("LibrarianId")
+                    b.Property<int>("Librarian_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LibrarianId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Librarian_id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("MonthlySalary")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Librarian_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -328,7 +321,7 @@ namespace SchoolAdminAPIconsuming.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LibrarianId");
+                    b.HasKey("Librarian_id");
 
                     b.ToTable("Librarians");
                 });

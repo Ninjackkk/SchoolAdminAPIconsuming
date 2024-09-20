@@ -279,7 +279,7 @@ namespace SchoolAdminAPIconsuming.Controllers
                 {
                     TimetableName = viewModel.TimetableName,
                     TimetableFile = filePath,
-                    StdId = viewModel.StdId
+                    STD = viewModel.STD
                 };
 
                 db.Timetables.Add(timetable);

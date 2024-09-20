@@ -11,9 +11,7 @@ namespace SchoolAdminAPIconsuming.Models
 
         public string? TimetableFile { get; set; } // Path to the uploaded file
 
-        [Required]
-        public int? StdId { get; set; }
+        public string? STD { get; set; }
 
-        public virtual STD STD { get; set; } // Navigation property to STD
     }
 }

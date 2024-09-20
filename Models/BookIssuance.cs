@@ -13,10 +13,11 @@ namespace SchoolAdminAPIconsuming.Models
 
         // For issuing to Student or Teacher based on UserId
         public string UserId { get; set; }
-        public Teacher Teacher { get; set; }  // Could be null if issued to student
+        public Teacher? Teacher { get; set; }  // Could be null if issued to student
 
-        public int StudentId { get; set; }  // Could be null if issued to teacher
-        public Student Student { get; set; }
+
+
+        public Student? Student { get; set; }
 
         [Required]
         public DateTime IssuedOn { get; set; }

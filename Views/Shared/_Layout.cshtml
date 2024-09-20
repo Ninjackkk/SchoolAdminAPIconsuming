@@ -43,7 +43,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewLeaveRequests">View Leave Requests</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewApplications">Add Librarian</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Create">Add Librarian</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewApplications">List Librarians</a>
@@ -85,7 +85,48 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewTimetable">View TimeTable</a>
+                            </li>
                             
+
+                        }
+
+
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Parent")
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewAssignment">View-Assignment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewTimetable">View TimeTable</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewFees">View Fees</a>
+                            </li>
+
+
+                        }
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Librarian")
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Librarian" asp-action="AddBook">Add Book</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Librarian" asp-action="BookList">Book List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Librarian" asp-action="IssueBook">Issue Book</a>
+                            </li>
+
+                        
+
 
                         }
 

@@ -1,0 +1,75 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@model SchoolAdminAPIconsuming.Models.FeesViewModel
+
+<h2>Annual Fees</h2>
+
+@if (Model != null)
+{
+    <p><strong>Student Name:</strong> @Model.StudentName</p>
+    <p><strong>Standard:</strong> @Model.StdName</p>
+    <p><strong>Annual Fees:</strong> @(Model.AnnualFees.HasValue ? Model.AnnualFees.Value.ToString("C") : "Not available")</p>
+    <p><strong>Fees Status:</strong> @Model.FeesStatus</p>
+
+    @if (Model.FeesStatus.ToLower() == "pending")
+    {
+        <button id="payButton" class="btn btn-primary">Pay Fees</button>
+    }
+}
+else
+{
+    <p>No fee information available.</p>
+}
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.getElementById('payButton').onclick = function () {
+        fetch('@Url.Action("PayFees", "Student")', {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.orderId) {
+                    var options = {
+                        key: data.keyId, // Your Razorpay Key ID
+                        amount: @(Model.AnnualFees.HasValue ? (Model.AnnualFees.Value * 100) : 0), // Amount in paise
+                        currency: 'INR',
+                        name: 'Gareebon ki Oxford University',
+                        description: 'Fees Payment',
+                        order_id: data.orderId,
+                        handler: function (response) {
+                            // Call your backend to update FeesStatus
+                            fetch('@Url.Action("UpdateFeesStatus", "Student")', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ paymentId: response.razorpay_payment_id })
+                            })
+                                .then(res => res.json())
+                                .then(result => {
+                                    if (result.success) {
+                                        alert('Payment successful!');
+                                        location.reload(); // Reload to show updated status
+                                    } else {
+                                        alert('Payment failed. Please try again.');
+                                    }
+                                });
+                        },
+                        modal: {
+                            ondismiss: function () {
+                                alert('Payment process was canceled');
+                            }
+                        }
+                    };
+                    var rzp = new Razorpay(options);
+                    rzp.open();
+                } else {
+                    alert('Failed to create order. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Payment initiation failed. Please try again.');
+            });
+    };
+</script>

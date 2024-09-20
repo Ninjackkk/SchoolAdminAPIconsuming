@@ -392,6 +392,34 @@ namespace SchoolAdminAPIconsuming.Controllers
             TempData["SuccessMessage"] = "Leave request rejected successfully.";
             return RedirectToAction(nameof(ViewLeaveRequests));
         }
+
+
+
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Librarian/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Librarian librarian)
+        {
+            db.Librarians.Add(librarian);
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Create));  // Redirect to the list of librarians
+
+            //return View(librarian);
+        }
+
+
+
+
+
+
+
+
     }
 
 

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.Book>
+
+<h2>Book List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+            @*  <th>Reserved</th> *@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Description</td>
+                <td><img src="@book.ImagePath" alt="Book Image" width="100" /></td>
+                @*  <td>@(book.IsReserved ? "Yes" : "No")</td> *@
+            </tr>
+        }
+    </tbody>
+</table>

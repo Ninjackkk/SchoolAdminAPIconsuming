@@ -10,7 +10,7 @@ namespace SchoolAdminAPIconsuming.Models
 
         public IFormFile TimetableFile { get; set; }
 
-        [Required]
-        public int StdId { get; set; }
+        public string? STD { get; set; }
+
     }
 }

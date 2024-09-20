@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BookIssuance>
+
+@{
+    ViewData["Title"] = "Issued Books List";
+}
+
+<h2>Issued Books List</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Book Title</th>
+            <th>User (Teacher/Student)</th>
+            <th>Issued On</th>
+            <th>Due Date</th>
+            <th>Returned On</th>
+            <th>Late Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Book.Title</td>
+                <td>
+                    @if (item.Teacher != null)
+                    {
+                        @item.Teacher.FirstName @item.Teacher.LastName
+
+                    }
+                    @* else if (item.Student != null)
+                {
+                @item.Student.FirstName @item.Student.LastName
+
+                } *@
+                </td>
+                <td>@item.IssuedOn.ToShortDateString()</td>
+                <td>@item.DueDate.ToShortDateString()</td>
+                <td>@(item.ReturnedOn.HasValue ? item.ReturnedOn.Value.ToShortDateString() : "Not Returned")</td>
+                <td>₹ @item.LateFee</td>
+            </tr>
+        }
+    </tbody>
+</table>

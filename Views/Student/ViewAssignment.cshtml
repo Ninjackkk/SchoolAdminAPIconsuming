@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "View Assignments";
+    bool isSubmitted = TempData["IsSubmitted"] != null && (bool)TempData["IsSubmitted"];
 }
 
 <h1>Assignments</h1>
@@ -46,10 +47,18 @@
                         <input type="hidden" name="GivenBy" value="@assignment.GivenBy" />
                         <input type="hidden" name="StdName" value="@assignment.StdName" />
 
-                        <input type="hidden" name="StudentId" value="@HttpContextAccessor.HttpContext.Session.GetString("StudentId")" /> <!-- Assuming you store student's name in session -->
+                        <input type="hidden" name="StudentId" value="@HttpContextAccessor.HttpContext.Session.GetString("StudentId")" />
 
                         <input type="file" name="SolutionFile" required />
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        @if (!isSubmitted)
+                        {
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        }
+                        else
+                        {
+                            <span class="text-success">Assignment submitted successfully!</span>
+                        }
                     </form>
                 </td>
             </tr>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolAdminAPIconsuming.Data;
 
@@ -11,9 +12,11 @@ using SchoolAdminAPIconsuming.Data;
 namespace SchoolAdminAPIconsuming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240919173502_Timetablecolumnupd")]
+    partial class Timetablecolumnupd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,41 +24,6 @@ namespace SchoolAdminAPIconsuming.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("SchoolAdminAPIconsuming.Models.AcademicReport", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("AssignmentAverage")
-                        .HasColumnType("float");
-
-                    b.Property<double>("AttendanceAverage")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Behavior")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Overall")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Remarks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AcademicReports");
-                });
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Accountant", b =>
                 {
@@ -202,69 +170,6 @@ namespace SchoolAdminAPIconsuming.Migrations
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Book", b =>
-                {
-                    b.Property<int>("BookId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BookId");
-
-                    b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("SchoolAdminAPIconsuming.Models.BookIssuance", b =>
-                {
-                    b.Property<int>("BookIssuanceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookIssuanceId"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("IssuedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ReturnedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BookIssuanceId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("BookIssuances");
-                });
-
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.LeaveRequest", b =>
                 {
                     b.Property<int>("LeaveApplicationId")
@@ -296,23 +201,13 @@ namespace SchoolAdminAPIconsuming.Migrations
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Librarian", b =>
                 {
-                    b.Property<int>("LibrarianId")
+                    b.Property<int>("Librarian_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LibrarianId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Librarian_id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("MonthlySalary")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Librarian_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -328,7 +223,7 @@ namespace SchoolAdminAPIconsuming.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LibrarianId");
+                    b.HasKey("Librarian_id");
 
                     b.ToTable("Librarians");
                 });
@@ -373,9 +268,6 @@ namespace SchoolAdminAPIconsuming.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StdId"));
-
-                    b.Property<double?>("AnnualFees")
-                        .HasColumnType("float");
 
                     b.Property<string>("StdName")
                         .IsRequired()
@@ -561,29 +453,6 @@ namespace SchoolAdminAPIconsuming.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("SchoolAdminAPIconsuming.Models.BookIssuance", b =>
-                {
-                    b.HasOne("SchoolAdminAPIconsuming.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SchoolAdminAPIconsuming.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("SchoolAdminAPIconsuming.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SchoolAdminAPIconsuming.Models.Student", b =>

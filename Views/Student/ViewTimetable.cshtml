@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SchoolAdminAPIconsuming.Models.Timetable>
+
+@{
+    ViewData["Title"] = "View Timetable";
+}
+
+<h1>Your Timetable</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Timetable Name</th>
+            <th>STD</th>
+            <th>File</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var timetable in Model)
+            {
+                <tr>
+                    <td>@timetable.TimetableName</td>
+                    <td>@timetable.STD</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(timetable.TimetableFile))
+                        {
+                            <a href="@timetable.TimetableFile" target="_blank">View Timetable</a>
+                        }
+                        else
+                        {
+                            <span>No File Available</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">No timetable available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

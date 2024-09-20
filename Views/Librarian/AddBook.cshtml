@@ -1,0 +1,20 @@
+﻿@model SchoolAdminAPIconsuming.Models.Book
+
+<h2>Add Book</h2>
+
+<form asp-action="AddBook" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="BookName">Book Name</label>
+        <input type="text" class="form-control" id="BookName" asp-for="Title" required>
+    </div>
+    <div class="form-group">
+        <label for="BookDescription">Description</label>
+        <textarea class="form-control" id="BookDescription" asp-for="Description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="BookImage">Book Image</label>
+        <input type="file" class="form-control" id="BookImage" name="BookImage" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Book</button>
+</form>
+

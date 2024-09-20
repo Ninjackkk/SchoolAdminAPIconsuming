@@ -11,6 +11,8 @@ namespace SchoolAdminAPIconsuming.Models
         [StringLength(50)]
         public string StdName { get; set; } // Name of the standard/class
 
+        public double? AnnualFees { get; set; }
+
         // Navigation properties
         public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
         public virtual ICollection<Teacher> Teachers { get; set; } = new HashSet<Teacher>();

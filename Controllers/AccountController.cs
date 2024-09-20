@@ -79,9 +79,8 @@ namespace SchoolAdminAPIconsuming.Controllers
                                 HttpContext.Session.SetString("StudentUserId", student.UserId);
                                 HttpContext.Session.SetString("StudentPassword", student.Password);
                                 HttpContext.Session.SetString("StudentId", student.StudentId.ToString());
-                                HttpContext.Session.SetString("StdName", student.STD);
-
-
+                                HttpContext.Session.SetString("studentstd", student.STD);
+                                HttpContext.Session.SetString("Role", "Parent");
 
                                 return RedirectToAction("OTP");
                             }
@@ -91,17 +90,13 @@ namespace SchoolAdminAPIconsuming.Controllers
                                 HttpContext.Session.SetString("UserId", student.UserId);
                                 HttpContext.Session.SetString("StudentId", student.StudentId.ToString());
                                 HttpContext.Session.SetString("studentstd", student.STD);
-
-
-                                HttpContext.Session.SetString("Role", "Student");
+                                HttpContext.Session.SetString("Role", signIn.Role);
 
                                 return RedirectToAction("ViewAttendance","Student");
                             }
                         }
                     }
                 }
-
-
 
                 else if (signIn.Role == "Librarian")
                 {
@@ -113,7 +108,7 @@ namespace SchoolAdminAPIconsuming.Controllers
                     {
                         HttpContext.Session.SetString("UserId", signIn.UserId);
                         HttpContext.Session.SetString("Role", signIn.Role);
-                        return RedirectToAction("AddStudent", "Admin");
+                        return RedirectToAction("AddBook", "Librarian");
                     }
                 }
                 else if (signIn.Role == "Accountant")
@@ -169,14 +164,13 @@ namespace SchoolAdminAPIconsuming.Controllers
             if (storedOtp != null && storedOtp == enteredOtp)
             {
                 HttpContext.Session.SetString("UserId", HttpContext.Session.GetString("StudentUserId"));
-                HttpContext.Session.SetString("Role", "Student");
 
                 // Clear the OTP after successful validation
                 HttpContext.Session.Remove("Otp");
                 HttpContext.Session.Remove("StudentUserId");
                 HttpContext.Session.Remove("StudentPassword");
 
-                return RedirectToAction("AddStudent", "Admin");
+                return RedirectToAction("ViewAttendance", "Student");
             }
             else
             {
@@ -195,7 +189,7 @@ namespace SchoolAdminAPIconsuming.Controllers
             var smtpServer = "smtp.gmail.com"; 
             var smtpPort = 587; 
             var smtpUsername = "forboringwork@gmail.com"; 
-            var smtpPassword = "kfhestoyrzxrpxyc"; 
+            var smtpPassword = "epavvwifoopxhcpu"; 
             var fromEmail = "forboringwork@gmail.com"; 
 
             var mailMessage = new MailMessage
